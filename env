@@ -31,7 +31,6 @@ AIRFLOW_WWW_USER_PASSWORD="airflow_user_pwd"
 FERNET_KEY="pKInkePlkl79C3mafrjthiQdXnsDU8EXjWDZi-SU00U=" # dtl : this is a randomly generated fernet key, you can generate your own here https://fernet.utils.com/
  
 # Youtube params
-API_KEY = 'AIzaSyCWvguR9beLoPlTOi0Sc6Cl6uQnE384bhA'
-CHANNEL_HANDLE = "MrBeast" # dtl : this is for v1 
-#CHANNEL = "MrBeast" # dtl : this is for v2
+API_KEY = '' # dtl : you should add your own youtube api key here, you can get one here https://console.cloud.google.com/apis/credentials
+CHANNEL_HANDLE = "MrBeast"
 

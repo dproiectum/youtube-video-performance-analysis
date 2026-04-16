@@ -10,9 +10,9 @@ POSTGRES_CONN_HOST=postgres
 POSTGRES_CONN_PORT=5432
  
 # Metadata (airflow) database credentials
-METADATA_DATABASE_NAME=airflow_metadata_db
-METADATA_DATABASE_USERNAME=airflow_meta_user
-METADATA_DATABASE_PASSWORD="airflow_meta_user_pwd" #should change in production, this is just for my project on my local machine
+AIRFLOW_METADATA_DATABASE_NAME=airflow_metadata_db
+AIRFLOW_METADATA_DATABASE_USERNAME=airflow_meta_user
+AIRFLOW_METADATA_DATABASE_PASSWORD="airflow_meta_user_pwd" #should change in production, this is just for my project on my local machine
  
 # Celery (backend) database credentials
 CELERY_BACKEND_NAME=celery_results_db
@@ -31,6 +31,6 @@ AIRFLOW_WWW_USER_PASSWORD="airflow_user_pwd"
 FERNET_KEY="pKInkePlkl79C3mafrjthiQdXnsDU8EXjWDZi-SU00U=" # dtl : this is a randomly generated fernet key, you can generate your own here https://fernet.utils.com/
  
 # Youtube params
-API_KEY = '' # dtl : you should add your own youtube api key here, you can get one here https://console.cloud.google.com/apis/credentials
+API_KEY = 'AIzaSyCWvguR9beLoPlTOi0Sc6Cl6uQnE384bhA' # dtl : you should add your own youtube api key here, you can get one here https://console.cloud.google.com/apis/credentials
 CHANNEL_HANDLE = "MrBeast"
 

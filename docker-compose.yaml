@@ -1,8 +1,10 @@
 x-airflow-common:
   &airflow-common
+  
   # Use custom image that builds on top of default airflow image (currently; Default: apache/airflow:2.9.2)
   # Image stored on Dockerhub
   image: ${DOCKERHUB_NAMESPACE}/${DOCKERHUB_REPOSITORY}:${IMAGE_TAG}
+  
   # Use the .env file to read the connection params and variables - SWITCH THIS OFF WHEN USING GITHUB ACTIONS
   env_file:
     - .env
@@ -43,7 +45,7 @@ x-airflow-common:
     # Connection can be written as URI: 
     # AIRFLOW_CONN_{CONN_ID}='my-conn-type://login:password@host:port/schema?param1=val1&param2=val2'
     # Connection to an external PostgreSQL database needed to store the data from the ELT process
-    AIRFLOW_CONN_POSTGRES_DB_YT_ELT: 'postgresql://${YOUTUBE_DATABASE_USERNAME}:${YOUTUBE_DATABASE_PASSWORD}@${POSTGRES_CONN_HOST}:${POSTGRES_CONN_PORT}/${YOUTUBE_DATABASE_NAME}'
+    AIRFLOW_CONN_POSTGRES_DB_YOUTUBE: 'postgresql://${YOUTUBE_DATABASE_USERNAME}:${YOUTUBE_DATABASE_PASSWORD}@${POSTGRES_CONN_HOST}:${POSTGRES_CONN_PORT}/${YOUTUBE_DATABASE_NAME}'
     
     # Variables can be written as follows: 
     # AIRFLOW_VAR_{VARIABLE_NAME}
@@ -66,7 +68,9 @@ x-airflow-common:
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
     - ./tests:/opt/airflow/tests
+
   user: "${AIRFLOW_UID}:0"
+
   depends_on:
     &airflow-common-depends-on
     redis:
@@ -77,7 +81,9 @@ x-airflow-common:
 services:
   postgres:
     container_name: postgres
+   
     image: postgres:13
+   
     # Use the .env file to read the connection params - SWITCH THIS OFF WHEN USING GITHUB ACTIONS
     env_file:
       - .env
@@ -96,17 +102,21 @@ services:
     #   - CELERY_BACKEND_PASSWORD=${CELERY_BACKEND_PASSWORD}
     #   - POSTGRES_CONN_HOST=${POSTGRES_CONN_HOST}
     #   - POSTGRES_CONN_PORT=${POSTGRES_CONN_PORT}
+    
     ports:
-      - 5432:5432
+      - 5432:5432 #map 'laptop port' to 'container port' (docker) to be able to connect to the db from the laptop if needed
+    
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
-      - ./docker/postgres/init-multiple-databases.sh:/docker-entrypoint-initdb.d/init-multiple-databases.sh
+      - databases_initialization.sh:/docker-entrypoint-initdb.d/databases_initialization.sh
+    
     # Test connection to 1 of 3 dbs, the AIRFLOW_AIRFLOW_AIRFLOW_AIRFLOW_METADATA db in this case
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_CONN_USERNAME}", "-d", "${AIRFLOW_METADATA_DATABASE_NAME}"]
       interval: 10s
       retries: 5
       start_period: 5s
+
     restart: always
  
   redis:

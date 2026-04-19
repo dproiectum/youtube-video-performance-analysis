@@ -22,7 +22,7 @@ create_user_and_database $AIRFLOW_METADATA_DATABASE_NAME $AIRFLOW_METADATA_DATAB
 # Celery result backend database
 create_user_and_database $CELERY_BACKEND_NAME $CELERY_BACKEND_USERNAME $CELERY_BACKEND_PASSWORD
 
-# ELT database
+# YouTube database
 create_user_and_database $YOUTUBE_DATABASE_NAME $YOUTUBE_DATABASE_USERNAME $YOUTUBE_DATABASE_PASSWORD
 
 echo "Airflow metadata, Celery backend, YouTube : databases, users and passwords created successfully"
